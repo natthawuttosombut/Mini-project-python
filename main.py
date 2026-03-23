@@ -1,5 +1,8 @@
+
 import tkinter as tk
+import os
 from tkinter import ttk, messagebox
+
 
 from main1 import ACCENT, CARD, TEXT
 
@@ -12,6 +15,8 @@ FONT_H = ("Arial", 18)
 FONT_M = ("Arial", 12)
 FONT_S = ("Arial", 10)
 class main_app(tk.Tk):
+
+  #use this size only
   def __init__(self):
     super().__init__()
     self.title("TO DO LIST")
@@ -21,6 +26,12 @@ class main_app(tk.Tk):
     self.configure(bg=BG)
     self.tasks: list[dict] = []
     self._build_ui()
+
+    #button
+    self.btn = tk.Frame(self, bg=BG)
+    self.btn.pack(fill="x", pady=10, padx=8,side="bottom") 
+    self.viewlogBTN()  
+    
 
   def _build_ui(self):
     # Header
@@ -40,6 +51,60 @@ class main_app(tk.Tk):
       bd=0, highlightthickness=2,
       highlightcolor=ACCENT,
       highlightbackground=CARD)
+
+
+#Start: buttonLog
+  def viewlogBTN(self):
+    tk.Button(self.btn, text="ViewLog", 
+                  bg=CARD, fg=TEXT, relief="flat",
+                  activebackground="#1a4a7a", activeforeground=TEXT,
+                  cursor="hand2", padx=10, pady=4,
+                  command=self.view_log).pack(side="right")
+                  #command send to def view_log
+#End: buttonLog
+
+
+  #เรียกหน้า Log
+  def view_log(self):
+    
+    window = tk.Toplevel(self)
+    window.title("Log PAGE")
+    
+    window.geometry("600x700")
+    window.configure(bg=BG)
+    window.resizable(False, False)
+
+    tk.Label(window, text="FOR SUCCESS", font=FONT_H, bg=BG).pack()
+    tk.Label(window, text="mission complete! to-do list", font=FONT_S, bg=BG).pack()
+    
+    frame = tk.Frame(window, bg=BG, padx=16, pady=0)
+    frame.pack(fill="both", expand=True) #fill= "both"ให้ frame ขยายทั้งเเนวตั้งเเนวนอน"
+    
+    txt = tk.Text(frame, font=FONT_S, bg=PANEL, fg="black",relief="flat", bd=0, wrap="word", state="disabled")
+    txt.pack(side="left", fill="both", expand=True)
+
+    #scrollbar 
+    sb = ttk.Scrollbar(frame, orient="vertical", command=txt.yview)
+    sb.pack(side="right", fill="y") #ยึดไว้ด้านขวา
+    txt.configure(yscrollcommand=sb.set) #เชื่อมกันระหว่างการเลื่อน
+
+    #เช็คว่า Logfile มีจริงไหม
+    if os.path.exists(LOG_FILE):
+      #มีไฟล์ ให้เปิดไฟล์เเบบอ่าน
+      with open(LOG_FILE, encoding="utf-8") as f:
+        content = f.read()
+    else:
+      content = "(No log yet. Mark tasks as done to start logging.)"
+
+    txt.configure(state="normal");
+    txt.insert("1.0", content)
+    txt.configure(state="disabled")
+    print("Welcome to log")
+
+
+
+
+
 
 if __name__ == "__main__":
   app = main_app()
