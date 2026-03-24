@@ -20,7 +20,11 @@ FONT_S    = ("Courier New", 10)
 FONT_BTN  = ("Courier New", 11, "bold")
 
 
-
+# ─── Utility ─────────────────────────────────────────────────────
+def log_done(task_text: str):
+    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    with open(LOG_FILE, "a", encoding="utf-8") as f:
+        f.write(f"[{now}] ✓ {task_text}\n")
 
 
 # ─── Main App ────────────────────────────────────────────────────

@@ -36,9 +36,6 @@ class main_app(tk.Tk):
 
 
   def _build_ui(self):
-
-    #กำลังจะเเบ่ง Layer เพื่อไม่ให้เบียดกัน
-
     window = tk.Frame(self, bg=BG, pady=20)
     window.pack(fill="both", expand=True, side="top")
     
