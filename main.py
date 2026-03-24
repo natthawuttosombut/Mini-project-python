@@ -19,6 +19,7 @@ class main_app(tk.Tk):
   #use this size only
   def __init__(self):
     super().__init__()
+    self.withdraw()
     self.title("TO DO LIST")
     self.geometry("600x700")
     self.iconbitmap("img/logo.ico")
@@ -31,7 +32,7 @@ class main_app(tk.Tk):
     self.btn = tk.Frame(self, bg=BG)
     self.btn.pack(fill="x", pady=10, padx=8,side="bottom") 
     self.viewlogBTN()  
-    
+    self.deiconify()
 
   def _build_ui(self):
     # Header
