@@ -21,34 +21,36 @@ class main_app(tk.Tk):
   def __init__(self):
     super().__init__()
     self.withdraw()
-    self.title("TO DO LIST")
+    self.title("Logs Page")
     self.geometry("600x700")
     self.iconbitmap("img/logo.ico")
     self.resizable(False, False)
     self.configure(bg=BG)
     self.tasks: list[dict] = []
+    #button
+    self.btn = tk.Frame(self, bg=BG)
+    self.btn.pack(fill="x", pady=10, padx=8,side="bottom") 
     self._build_ui()
+    self.gobackBTN() #สำหรับย้อนกลับไปหน้า Main
     self.deiconify()
-    # #button
-    # self.btn = tk.Frame(self, bg=BG)
-    # self.btn.pack(fill="x", pady=10, padx=8,side="bottom") 
-    # self.viewlogBTN()  
-    
+
 
   def _build_ui(self):
+
+    #กำลังจะเเบ่ง Layer เพื่อไม่ให้เบียดกัน
+
     window = tk.Frame(self, bg=BG, pady=20)
-    window.pack(fill="both", expand=True)
+    window.pack(fill="both", expand=True, side="top")
+    
     title_label = tk.Label(window, text="FOR SUCCESS", font=FONT_H, bg=BG)
     title_label.pack()
+    title_label = tk.Label(window, text="Congratulations! You completed your To-Do List!\n", font=FONT_S, bg=BG)
+    title_label.pack()
     
-    # window.geometry("600x700")
-    # window.configure(bg=BG)
-    # window.resizable(False, False)
-    
-    frame = tk.Frame(window, bg=BG, padx=16, pady=0)
+    frame = tk.Frame(window, bg=BG, padx=12, pady=0)
     frame.pack(fill="both", expand=True) #fill= "both"ให้ frame ขยายทั้งเเนวตั้งเเนวนอน"
     
-    txt = tk.Text(frame, font=FONT_S, bg=PANEL, fg="black",relief="flat", bd=0, wrap="word", state="disabled", )
+    txt = tk.Text(frame, font=FONT_S, bg=PANEL, fg="black",relief="flat", bd=0, wrap="word", state="disabled", height=20)
     txt.pack(side="left", fill="both", expand=True)
 
     #scrollbar 
@@ -67,15 +69,21 @@ class main_app(tk.Tk):
     txt.configure(state="normal");
     txt.insert("1.0", content)
     txt.configure(state="disabled")
-    
-    
-
-                  
-                  
-                  
-    
     print("Welcome to log")
 
+
+    #Start: buttonLog
+  def gobackBTN(self):
+    tk.Button(self.btn, text="Go back to main", 
+                  bg=CARD, fg=TEXT, relief="flat",
+                  activebackground="#1a4a7a", activeforeground=TEXT,
+                  cursor="hand2", padx=10, pady=4,
+                  command=self.goBack).pack(side="right")
+                  #command send to def view_log
+#End: buttonLog
+    
+  def goBack(self):
+    print("Welcome back to main")
 
 
 
